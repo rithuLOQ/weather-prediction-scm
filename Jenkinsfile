@@ -6,19 +6,16 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Run SCM Automated Tests') {
-            steps {
-                bat 'pip install -r requirements.txt'
-                bat 'pip install pytest'
-                
-                // Running Sanjana and Sahaana's SCM Configuration Items
-                bat 'python -m pytest test_regression.py'
-                bat 'python -m pytest test_classification.py'
-            }
-        }
         stage('Build Docker Image') {
             steps {
+                // Build the container first
                 bat 'docker build -t weather-app:latest .'
+            }
+        }
+        stage('Run SCM Automated Tests') {
+            steps {
+                // Run the tests INSIDE the isolated Linux container!
+                bat 'docker run --rm weather-app:latest sh -c "pip install pytest && pytest test_regression.py && pytest test_classification.py"'
             }
         }
     }
