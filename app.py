@@ -80,7 +80,7 @@ if st.button("🔍 Predict Weather"):
 
     # Performance metrics
     st.markdown("### 📊 Model Performance")
-    st.write(f"Linear Regression : **{r2_score(yr_test, lr.predict(Xr_test)):.2f}**")
+    st.write(f"Linear Regression testing: **{r2_score(yr_test, lr.predict(Xr_test)):.2f}**")
     st.write(f"Decision Tree R²: **{r2_score(yr_test, dt.predict(Xr_test)):.2f}**")
     st.write(f"Random Forest R²: **{r2_score(yr_test, rf.predict(Xr_test)):.2f}**")
     st.write(f"Classification Accuracy: **{accuracy_score(yc_test, rf_clf.predict(Xc_test)):.2f}**")
